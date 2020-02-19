@@ -1,8 +1,10 @@
 <template>
 <div id="app">
+  <!-- 路由出口 -->
+  <router-view></router-view>
   <!-- 要加 to 属性 不然就会报错 -->
-  <router-link to="#">点我呀</router-link>
-   <el-button  type="primary" disabled>默认按钮</el-button>
+  <!-- <router-link to="#">点我呀</router-link> -->
+  
 </div>
 </template>
 
