@@ -7,6 +7,8 @@ import 'element-ui/lib/theme-chalk/index.css';
 Vue.use(ElementUI);
 //导入路由文件
 import router from "./router/index.js";
+//导入公共css  直接 import 加路径
+import  './style/base.css'
 Vue.config.productionTip = false
 
 new Vue({
