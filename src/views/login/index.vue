@@ -12,17 +12,17 @@
         <span class="right-title">用户登录</span>
       </div>
       <!-- 表单 -->
-      <el-form label-width="43px">
+      <el-form ref="loginForm" label-width="43px" :rules="rules" :model="form">
         <!-- 账号 -->
-        <el-form-item>
+        <el-form-item prop="phone">
           <el-input placeholder="请输入手机号" prefix-icon="el-icon-user" v-model="form.phone"></el-input>
         </el-form-item>
         <!-- 密码 -->
-        <el-form-item>
-          <el-input placeholder="请输入密码" prefix-icon="el-icon-lock" v-model="input2" show-password></el-input>
+        <el-form-item prop="password">
+          <el-input placeholder="请输入密码" prefix-icon="el-icon-lock" v-model="form.password" show-password></el-input>
         </el-form-item>
         <!-- 验证码 -->
-        <el-form-item>
+        <el-form-item prop="code">
           <el-row>
             <el-col :span="17">
               <el-input placeholder="请输入验证码" prefix-icon="el-icon-key" v-model="form.code"></el-input>
@@ -34,16 +34,19 @@
           </el-row>
         </el-form-item>
         <!-- 默认选项 -->
-        <el-form-item>
-          <el-checkbox class="agree" v-model="checked">
-            我已阅读并同意
-            <el-link type="primary">用户协议</el-link>和
-            <el-link type="primary">隐私条款</el-link>
-          </el-checkbox>
+        <el-form-item prop="agree">
+          <div class="agree-box" >
+            <el-checkbox class="agree" v-model="form.agree"></el-checkbox>
+            <span>
+              我已阅读并同意
+              <el-link type="primary">用户协议</el-link>和
+              <el-link type="primary">隐私条款</el-link>
+            </span>
+          </div>
         </el-form-item>
         <!-- 按钮 -->
         <el-form-item>
-          <el-button type="primary" class="btn-box">登录</el-button>
+          <el-button type="primary" class="btn-box" @click="doLogin">登录</el-button>
           <el-button type="primary" class="btn-box">注册</el-button>
         </el-form-item>
       </el-form>
@@ -61,10 +64,37 @@ export default {
       form: {
         phone: "",
         password: "",
-        code: ""
-      }
+        code: "",
+        agree: false
+      },
+      rules: 
+        {
+          phone: [
+            { required: true, message: "手机号码不能为空", trigger: "blur" }
+          ],
+          password: [
+            { required: true, message: "密码不能为空", trigger: "blur" }
+          ],
+          code: [
+            { required: true, message: "验证码不能为空", trigger: "blur" }
+          ],
+          agree: [
+            { pattern: /true/, message: "必须勾选同意用户协议", trigger: "change" }
+          ]
+        }
+      
     };
+  },
+  methods:{
+    doLogin(){
+      this.$refs.loginForm.validate(v=>{
+        if(v){
+          alert('全部通过')
+        }
+      })
+    }
   }
+
 };
 </script>
 
@@ -118,11 +148,19 @@ export default {
       width: 110px;
       height: 42px;
     }
-    .agree {
+    .agree-box {
       display: flex;
-      .el-checkbox__label {
+      align-items: center;
+      .agree {
         display: flex;
-        align-items: center;
+
+        .el-checkbox__label {
+          display: flex;
+          // align-items: center;
+        }
+      }
+      span {
+        margin-left: 3px;
       }
     }
     .btn-box {
