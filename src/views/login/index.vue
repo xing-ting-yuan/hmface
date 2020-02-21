@@ -47,18 +47,23 @@
         <!-- 按钮 -->
         <el-form-item>
           <el-button type="primary" class="btn-box" @click="doLogin">登录</el-button>
-          <el-button type="primary" class="btn-box">注册</el-button>
+          <el-button type="primary" class="btn-box" @click="showReg">注册</el-button>
         </el-form-item>
       </el-form>
     </div>
     <!-- 右侧图片 -->
-
     <img src="./images/login_banner_ele.png" alt />
+    <!-- 注册框-- 对话框  在用ref 就在那个页面加ref-->
+    <reg ref="reg"></reg>
   </div>
 </template>
 
 <script>
+import reg from "./components/register.vue"
 export default {
+  components:{
+    reg,
+  },
   data() {
     return {
       form: {
@@ -92,6 +97,9 @@ export default {
           alert('全部通过')
         }
       })
+    },
+    showReg(){
+      this.$refs.reg.dialogFormVisible = true
     }
   }
 
